@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>游戏活动运营数据小助手</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- 标题区 -->
+    <header class="header">
+      <h1 class="header-title">游戏活动运营数据小助手</h1>
+      <p class="header-subtitle">快速记录活动数据，自动计算运营指标，生成活动复盘建议</p>
+      <p class="header-desc">Login / Gacha / Dungeon / Payment / Retention Activity Analytics</p>
+    </header>
+
+    <!-- 异常提示 -->
+    <div id="alertArea" class="alert-area hidden">
+      <div class="alert-card">
+        <span class="alert-icon">!</span>
+        <div id="alertMessages" class="alert-messages"></div>
+      </div>
+    </div>
+
+    <!-- 热门游戏配置模板 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">热门游戏活动模板</h2>
+      </div>
+      <div class="card">
+        <div class="template-select-row">
+          <div class="form-group">
+            <label for="gameTemplate">选择游戏及活动模板</label>
+            <select id="gameTemplate">
+              <option value="">— 请选择游戏活动模板 —</option>
+            </select>
+          </div>
+          <button id="btnLoadTemplate" class="btn btn-secondary btn-sm">载入模板</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 活动基础信息 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">活动基础信息</h2>
+      </div>
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="activityName">活动名称</label>
+            <input type="text" id="activityName" placeholder="请输入活动名称">
+          </div>
+          <div class="form-group">
+            <label for="activityType">活动类型</label>
+            <select id="activityType">
+              <option value="">请选择</option>
+              <option value="登录活动">登录活动</option>
+              <option value="充值活动">充值活动</option>
+              <option value="副本挑战">副本挑战</option>
+              <option value="抽卡活动">抽卡活动</option>
+              <option value="回流活动">回流活动</option>
+              <option value="节日活动">节日活动</option>
+              <option value="排行榜活动">排行榜活动</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="targetUser">目标用户</label>
+            <select id="targetUser">
+              <option value="">请选择</option>
+              <option value="新玩家">新玩家</option>
+              <option value="活跃玩家">活跃玩家</option>
+              <option value="回流玩家">回流玩家</option>
+              <option value="付费玩家">付费玩家</option>
+              <option value="全体玩家">全体玩家</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="activityGoal">活动目标</label>
+            <select id="activityGoal">
+              <option value="">请选择</option>
+              <option value="提升活跃">提升活跃</option>
+              <option value="提升留存">提升留存</option>
+              <option value="提升付费">提升付费</option>
+              <option value="促进回流">促进回流</option>
+              <option value="提高任务完成率">提高任务完成率</option>
+              <option value="提升奖励领取率">提升奖励领取率</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="activityPeriod">活动周期</label>
+            <input type="text" id="activityPeriod" placeholder="例如：2026.07.01 - 2026.07.07">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 活动数据录入 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">活动数据录入</h2>
+      </div>
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="exposureCount">曝光人数</label>
+            <input type="number" id="exposureCount" placeholder="0" min="0">
+          </div>
+          <div class="form-group">
+            <label for="participantCount">参与人数</label>
+            <input type="number" id="participantCount" placeholder="0" min="0">
+          </div>
+          <div class="form-group">
+            <label for="completionCount">完成人数</label>
+            <input type="number" id="completionCount" placeholder="0" min="0">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="rewardClaimCount">奖励领取人数</label>
+            <input type="number" id="rewardClaimCount" placeholder="0" min="0">
+          </div>
+          <div class="form-group">
+            <label for="returnCount">次日回访人数</label>
+            <input type="number" id="returnCount" placeholder="0" min="0">
+          </div>
+          <div class="form-group">
+            <label for="totalCost">活动总成本</label>
+            <input type="number" id="totalCost" placeholder="0" min="0">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 一键导入数据 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">一键导入数据</h2>
+      </div>
+      <div class="card import-card">
+        <div class="import-options">
+          <label class="btn btn-secondary file-label btn-sm">
+            选择文件导入
+            <input type="file" id="fileInput" accept=".xlsx,.csv,.md,.txt" hidden>
+          </label>
+          <button id="btnPasteToggle" class="btn btn-outline btn-sm">粘贴数据导入</button>
+        </div>
+        <div id="pasteArea" class="paste-area hidden">
+          <textarea id="pasteContent" rows="6" placeholder="粘贴从 Excel/WPS 复制的表格数据或 Markdown 表格...
+
+支持两种格式：
+格式一（字段-值 纵向）：
+活动名称 | 夏日登录福利活动
+活动类型 | 登录活动
+...
+
+格式二（表头-数据 横向）：
+活动名称 | 活动类型 | 目标用户 | ...
+夏日登录福利活动 | 登录活动 | 活跃玩家 | ..."></textarea>
+          <button id="btnPasteImport" class="btn btn-primary btn-sm">导入粘贴数据</button>
+        </div>
+        <p class="import-hint">
+          支持 Excel(.xlsx)、WPS表格、CSV、Markdown 文件导入。自动识别「字段-值」纵向表格和「表头-数据」横向表格两种格式。
+        </p>
+      </div>
+    </section>
+
+    <!-- 操作按钮 -->
+    <div class="button-area">
+      <button id="btnSample" class="btn btn-secondary">填入示例数据</button>
+      <button id="btnGenerate" class="btn btn-primary">生成复盘</button>
+      <button id="btnClear" class="btn btn-outline">清空数据</button>
+    </div>
+
+    <!-- 指标看板 -->
+    <section id="metricsSection" class="section hidden">
+      <div class="section-header">
+        <h2 class="section-title">运营指标看板</h2>
+      </div>
+      <div id="metricsCards" class="metrics-grid"></div>
+    </section>
+
+    <!-- 综合评级 -->
+    <section id="ratingSection" class="section hidden">
+      <div class="section-header">
+        <h2 class="section-title">活动综合评级</h2>
+      </div>
+      <div id="ratingCard" class="card rating-card"></div>
+    </section>
+
+    <!-- 复盘报告 -->
+    <section id="reviewSection" class="section hidden">
+      <div class="section-header">
+        <h2 class="section-title">自动复盘报告</h2>
+      </div>
+      <div id="reviewContent" class="card review-card"></div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
